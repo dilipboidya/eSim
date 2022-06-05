@@ -1,0 +1,33 @@
+* Qucs 0.0.20  /home/dilip/.qucs/study on sparam_prj/schematic.sch
+
+
+vin1 _net0 gnd dc 0 ac 1 sin(0 2 5000meg)
+
+*Pac:P1 _net0 gnd Num="1" Z="50" 
+*P="0 dBm" f="1 GHz"
+T1 _net1 gnd _net2 gnd zo=50 td=3ns 
+*T1 In gnd Out gnd z0=50 td=3ns
+
+*Alpha="0 dB" Temp="26.85"
+R:R1 _net0 _net1 R="50" Temp="26.85" Tc1="0.0" Tc2="0.0" 
+R:R2 _net2 _net3 R="10000k" Temp="26.85" Tc1="0.0" Tc2="0.0" 
+*Pac:P2 _net3 gnd Num="2" Z="50" P="0 dBm" f="1 GHz"
+vin2 _net3 gnd dc 0 ac  1 sin(0 2 50000meg)
+*Eqn:Eqn1  S11="dB(S[1,1])" S21="dB(S[2,1])" 
+*.SP:SP1 Type="log" Start="0.1 GHz" Stop="10 GHz" Points="19" Noise="no"
+
+
+* for ac analysis .ac dec 10 1 1k 
+
+.sp dec 10 1 10K
+
+.control
+
+
+run
+
+
+plot vdb(_net3) vdb(_net0) xlog
+.endc
+.end
+

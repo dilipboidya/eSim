@@ -1,0 +1,18 @@
+*my transmission line for 4 nodes
+
+Vs vsrc 0  pulse (0 1 5n 1ns 1ns 20n 40n)
+Rsrc vsrc In 50
+T1 In gnd Out gnd z0=50 td=3ns
+
+
+Rload Out gnd 10meg
+
+
+.tran 1ns 45ns
+
+.control
+run
+
+plot v(In) v(Out) v(vsrc)
+.endc
+.end
